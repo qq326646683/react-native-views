@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import nell.jinxian.R;
+
 /**
  * 上拉加载更多控件
  */
@@ -33,7 +35,7 @@ class RLLoadMoreView extends StatusView {
     @Override
     protected int setLayout() {
         // TODO 在这里设置加载更多控件布局id
-        return R.layout.layout_load_more;
+        return R.layout.layout_refresh;
     }
 
     @Override
@@ -45,7 +47,7 @@ class RLLoadMoreView extends StatusView {
         iv.setVisibility(VISIBLE);
 
         tv.setText("正在加载");
-        iv.setImageResource(R.drawable.loading);
+//        iv.setImageResource(R.drawable.loading);
         ((AnimationDrawable)iv.getDrawable()).start();
     }
 
@@ -74,17 +76,17 @@ class RLLoadMoreView extends StatusView {
         iv.setVisibility(VISIBLE);
 
         tv.setText("上拉加载更多");
-        if (percent < 20) {
-            iv.setImageResource(R.drawable.pull_end_image_frame_01);
-        } else if (percent < 40) {
-            iv.setImageResource(R.drawable.pull_end_image_frame_02);
-        } else if (percent < 60) {
-            iv.setImageResource(R.drawable.pull_end_image_frame_03);
-        } else if (percent < 80) {
-            iv.setImageResource(R.drawable.pull_end_image_frame_04);
-        } else {
-            iv.setImageResource(R.drawable.pull_end_image_frame_05);
-        }
+//        if (percent < 20) {
+//            iv.setImageResource(R.drawable.pull_end_image_frame_01);
+//        } else if (percent < 40) {
+//            iv.setImageResource(R.drawable.pull_end_image_frame_02);
+//        } else if (percent < 60) {
+//            iv.setImageResource(R.drawable.pull_end_image_frame_03);
+//        } else if (percent < 80) {
+//            iv.setImageResource(R.drawable.pull_end_image_frame_04);
+//        } else {
+//            iv.setImageResource(R.drawable.pull_end_image_frame_05);
+//        }
 
     }
 

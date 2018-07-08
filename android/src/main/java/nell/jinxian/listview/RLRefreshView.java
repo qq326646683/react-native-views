@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import nell.jinxian.R;
+
 /**
  * 下拉刷新控件
  */

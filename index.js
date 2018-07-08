@@ -1,17 +1,5 @@
-// import React from 'react-native';
-//
-// const RCTViews = React.NativeModules.RCTViews;
-//
-// export default {
-//   init: () => {
-//     return RCTViews.init();
-//   },
-// };
-import {RecyclerViewList, DataSource} from './src/listview';
-
-var Views = {
-    RecyclerViewList,
-    DataSource,
-};
+import RecyclerView from './src/listview-android/RecyclerViewList';
+import DataSource from './src/listview-android/DataSource';
+var Views = {RecyclerView, DataSource}
 
 module.exports = Views;

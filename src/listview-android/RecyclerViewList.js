@@ -47,7 +47,7 @@ class RecyclerViewItem extends Component {
 }
 const NativeRecyclerViewItem = requireNativeComponent('RecyclerViewItemView');
 
-class RecyclerView extends React.PureComponent {
+export default class RecyclerView extends React.PureComponent {
   static propTypes = {
     ...View.propTypes,
     renderItem: PropTypes.func,
@@ -405,5 +405,3 @@ var styles = StyleSheet.create({
 });
 
 const NativeRecyclerView = requireNativeComponent('AndroidRecyclerViewBackedScrollView', RecyclerView, nativeOnlyProps);
-
-module.exports = RecyclerView;

@@ -28,9 +28,9 @@ import com.facebook.react.views.scroll.OnScrollDispatchHelper;
 import com.facebook.react.views.scroll.ScrollEvent;
 import com.facebook.react.views.scroll.ScrollEventType;
 import com.facebook.react.views.scroll.VelocityHelper;
-
 import java.util.ArrayList;
 import java.util.List;
+import nell.jinxian.R;
 
 /**
  * Wraps {@link RecyclerView} providing interface similar to `ScrollView.js` where each children

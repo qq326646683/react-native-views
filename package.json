@@ -1,28 +1,19 @@
 {
   "name": "react-native-views",
   "version": "0.0.1",
-  "dependencies": "component collection",
+  "description": "views collection",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@https://github.com/qq326646683/react-native-views.git"
+    "url": "\"git+https://github.com/qq326646683/react-native-views\""
   },
-  "contributors": [
-    "Nell <32664683@qq.com>"
+  "keywords": [
+    "react-native",
+    "react-native-listview"
   ],
-  "license": "MIT",
-  "rnpm": {
-    "android": {
-      "packageInstance": "new RCTViewPackage()"
-    },
-    "ios": {
-      "sharedLibraries": []
-    }
-  },
-  "devDependencies": {
-    "@types/react-native": "^0.52.22"
-  }
+  "author": "qq326646683",
+  "license": "MIT"
 }

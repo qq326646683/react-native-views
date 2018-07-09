@@ -2,7 +2,7 @@
   "name": "react-native-views",
   "version": "0.0.1",
   "description": "views collection",
-  "main": "index.js",
+  "main": "listview-ios/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

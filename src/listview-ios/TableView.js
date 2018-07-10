@@ -30,10 +30,10 @@ function extend(el, map) {
 
 const FontWeight = PropTypes.oneOf([100, 200, 300, 400, 500, 600, 700, 800, 900, 'bold', 'normal'])
 const FontStyle = PropTypes.oneOf(['italic', 'normal', 'oblique'])
-const RefreshState = PropTypes.oneOf(['startRefresh', 'stopRefresh', 'footerIdle', 'footerNoMore'])
+const RefreshState = PropTypes.oneOf(['HeaderRefreshing', 'Idle', 'NoMoreData', 'FooterRefreshing', 'Failure', 'FirstLoad'])
 const HeaderFooterType = PropTypes.oneOf([0, 1])
 class TableView extends React.Component {
-    
+
     static propTypes = {
         onPress: PropTypes.func,
         onAccessoryPress: PropTypes.func,
@@ -170,14 +170,15 @@ class TableView extends React.Component {
         // if(nextProps.footerState === Footer_LoadMore) {
         //     NativeModules.RNTableViewManager.startLoadMore(findNodeHandle(this.tableView))
         // }
-        console.log('nextProps.refreshState', nextProps.refreshState)
-        if(this.props.refreshState != 'startRefresh' &&  nextProps.refreshState === 'startRefresh') {
+
+      console.log('this.props.refreshState', this.props.refreshState)
+      console.log('nextProps.refreshState', nextProps.refreshState)
+      if(this.props.refreshState != 'HeaderRefreshing' &&  nextProps.refreshState === 'HeaderRefreshing') {
             NativeModules.RNTableViewManager.startRefreshing(findNodeHandle(this.tableView))
-        }else if(nextProps.refreshState === 'stopRefresh') {
+        }else if(nextProps.refreshState === 'Idle') {
             NativeModules.RNTableViewManager.stopRefreshing(findNodeHandle(this.tableView))
-        }else if(nextProps.refreshState === 'footerIdle') {
             NativeModules.RNTableViewManager.stopLoadMore(findNodeHandle(this.tableView))
-        }else if(this.props.refreshState != 'footerNoMore' &&  nextProps.refreshState === 'footerNoMore') {
+        }else if(this.props.refreshState != 'NoMoreData' &&  nextProps.refreshState === 'NoMoreData') {
             NativeModules.RNTableViewManager.loadLastData(findNodeHandle(this.tableView))
         }
     }

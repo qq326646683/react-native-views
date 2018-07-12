@@ -229,6 +229,9 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     _tableView.editing = self.editing;
     _tableView.sectionIndexBackgroundColor = UIColor.clearColor;
     _tableView.sectionIndexColor = [UIColor colorWithHexString:@"#454545"];
+    _tableView.estimatedRowHeight = 0;
+    _tableView.estimatedSectionFooterHeight = 0;
+    _tableView.estimatedSectionHeaderHeight = 0;
     _reactModuleCellReuseIndentifier = @"ReactModuleCell";
     [_tableView registerClass:[RNReactModuleCell class] forCellReuseIdentifier:_reactModuleCellReuseIndentifier];
     [self addSubview:_tableView];

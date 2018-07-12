@@ -201,7 +201,6 @@ export default class RecyclerView extends React.PureComponent {
         ? ListHeaderComponent
         : <ListHeaderComponent />;
     }
-
     if (ListFooterComponent) {
       var footerElement = React.isValidElement(ListFooterComponent)
         ? ListFooterComponent
@@ -343,9 +342,7 @@ export default class RecyclerView extends React.PureComponent {
       );
 
     const { firstVisibleIndex, lastVisibleIndex, itemCount } = this.state;
-    console.log('aaa')
     if (itemCount == 0) {
-      console.log('bbb')
       this.setState({
         itemCount: this.props.dataSource.size(),
         firstVisibleIndex: 0,
@@ -353,13 +350,11 @@ export default class RecyclerView extends React.PureComponent {
       });
     } else {
       if (position <= firstVisibleIndex) {
-        console.log('ccc')
         this.setState({
           firstVisibleIndex: this.state.firstVisibleIndex + count,
           lastVisibleIndex: this.state.lastVisibleIndex + count,
         });
       } else {
-        console.log('ddd')
         setTimeout(() => {
           this.forceUpdate();
         })

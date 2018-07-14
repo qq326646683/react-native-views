@@ -45,6 +45,7 @@
 		24737E8F20F36F2E0054361E /* RNTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24737E6520F36F2E0054361E /* RNTableHeaderView.m */; };
 		24737E9020F36F2E0054361E /* RNCellViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 24737E6620F36F2E0054361E /* RNCellViewManager.m */; };
 		24737E9120F36F2E0054361E /* RNReactModuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24737E6A20F36F2E0054361E /* RNReactModuleCell.m */; };
+		2494726520F75C2800D9ECCB /* CircleRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2494726420F75C2800D9ECCB /* CircleRefreshHeader.m */; };
 		5D72D2EC1C16249000E22EC1 /* RCTViews.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D72D2EB1C16249000E22EC1 /* RCTViews.h */; };
 		5D72D2EE1C16249000E22EC1 /* RCTViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D72D2ED1C16249000E22EC1 /* RCTViews.m */; };
 /* End PBXBuildFile section */
@@ -267,6 +268,8 @@
 		24737E6920F36F2E0054361E /* RNTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableFooterView.h; sourceTree = "<group>"; };
 		24737E6A20F36F2E0054361E /* RNReactModuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNReactModuleCell.m; sourceTree = "<group>"; };
 		24737E6B20F36F2E0054361E /* RNTableHeaderViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableHeaderViewManager.h; sourceTree = "<group>"; };
+		2494726320F75C2800D9ECCB /* CircleRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleRefreshHeader.h; sourceTree = "<group>"; };
+		2494726420F75C2800D9ECCB /* CircleRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleRefreshHeader.m; sourceTree = "<group>"; };
 		5D72D2E81C16249000E22EC1 /* libRCTViews.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTViews.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D72D2EB1C16249000E22EC1 /* RCTViews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTViews.h; sourceTree = "<group>"; };
 		5D72D2ED1C16249000E22EC1 /* RCTViews.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTViews.m; sourceTree = "<group>"; };
@@ -343,6 +346,8 @@
 		24737D6520F36F2E0054361E /* DIY */ = {
 			isa = PBXGroup;
 			children = (
+				2494726320F75C2800D9ECCB /* CircleRefreshHeader.h */,
+				2494726420F75C2800D9ECCB /* CircleRefreshHeader.m */,
 				24737D6620F36F2E0054361E /* MJDIYBackFooter.h */,
 				24737D6720F36F2E0054361E /* MJChiBaoZiFooter2.m */,
 				24737D6820F36F2E0054361E /* MJChiBaoZiFooter.h */,
@@ -1162,6 +1167,7 @@
 				24737E7520F36F2E0054361E /* MJDIYHeader.m in Sources */,
 				24737E8320F36F2E0054361E /* MJRefreshStateHeader.m in Sources */,
 				5D72D2EE1C16249000E22EC1 /* RCTViews.m in Sources */,
+				2494726520F75C2800D9ECCB /* CircleRefreshHeader.m in Sources */,
 				24737E7820F36F2E0054361E /* MJChiBaoZiFooter.m in Sources */,
 				24737E8C20F36F2E0054361E /* RNTableFooterView.m in Sources */,
 				24737E9120F36F2E0054361E /* RNReactModuleCell.m in Sources */,

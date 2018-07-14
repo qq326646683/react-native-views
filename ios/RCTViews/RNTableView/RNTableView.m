@@ -22,6 +22,7 @@
 #import "MJChiBaoZiFooter.h"
 #import "MJDIYAutoFooter.h"
 #import "MJDIYHeader.h"
+#import "CircleRefreshHeader.h"
 #define APP_WIDTH [[UIScreen mainScreen]applicationFrame].size.width
 #define APP_HEIGHT [[UIScreen mainScreen]applicationFrame].size.height
 @interface RNTableView()<UITableViewDataSource, UITableViewDelegate> {
@@ -241,7 +242,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         _tableView.mj_footer = [MJChiBaoZiFooter footerWithRefreshingTarget:self refreshingAction:@selector(onStartLoadMore)];
     } else {
         _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-            [self onStartRefresh];
+            [self onStartLoadMore];
         }];
     }
 }
@@ -261,6 +262,8 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         self.tableView.mj_header = [MJChiBaoZiHeader headerWithRefreshingBlock:^{
             [self onStartRefresh];
         }];
+    } else if (self.headerType == 2) {
+        self.tableView.mj_header = [CircleRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(onStartRefresh)];
     } else {
         // 默认
         self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(onStartRefresh)];

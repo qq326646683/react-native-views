@@ -572,37 +572,37 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
-    NSMutableDictionary *newValue = [self dataForRow:indexPath.item section:indexPath.section];
-    newValue[@"target"] = self.reactTag;
-    newValue[@"selectedIndex"] = [NSNumber numberWithInteger:indexPath.item];
-    newValue[@"selectedSection"] = [NSNumber numberWithInteger:indexPath.section];
-
-    /*
-     * if allowToggle is enabled and we tap an already selected row, then remove the selection.
-     * otherwise, add selection to the new row and remove selection from old row if multiple is not allowed.
-     * default: allowMultipleSelection:false and allowToggle: false
-     */
-    if (self.selectedValue){
-        if (_allowsToggle && newValue[@"selected"] && [newValue[@"selected"] intValue]) {
-            [newValue removeObjectForKey:@"selected"];
-        } else {
-            if (!_allowsMultipleSelection) {
-                [_lastValue removeObjectForKey:@"selected"];
-            }
-
-            [newValue setObject:@1 forKey:@"selected"];
-        }
-        [self.tableView reloadData];
-    }
-
-    self.onPress(newValue);
-
-    self.selectedIndexes[indexPath.section] = [NSNumber numberWithInteger:indexPath.item];
-    _lastValue = newValue;
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+//
+//    NSMutableDictionary *newValue = [self dataForRow:indexPath.item section:indexPath.section];
+//    newValue[@"target"] = self.reactTag;
+//    newValue[@"selectedIndex"] = [NSNumber numberWithInteger:indexPath.item];
+//    newValue[@"selectedSection"] = [NSNumber numberWithInteger:indexPath.section];
+//
+//    /*
+//     * if allowToggle is enabled and we tap an already selected row, then remove the selection.
+//     * otherwise, add selection to the new row and remove selection from old row if multiple is not allowed.
+//     * default: allowMultipleSelection:false and allowToggle: false
+//     */
+//    if (self.selectedValue){
+//        if (_allowsToggle && newValue[@"selected"] && [newValue[@"selected"] intValue]) {
+//            [newValue removeObjectForKey:@"selected"];
+//        } else {
+//            if (!_allowsMultipleSelection) {
+//                [_lastValue removeObjectForKey:@"selected"];
+//            }
+//
+//            [newValue setObject:@1 forKey:@"selected"];
+//        }
+//        [self.tableView reloadData];
+//    }
+//
+//    self.onPress(newValue);
+//
+//    self.selectedIndexes[indexPath.section] = [NSNumber numberWithInteger:indexPath.item];
+//    _lastValue = newValue;
+//}
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"accessoryButtonTappedForRowWithIndexPath %@", indexPath);

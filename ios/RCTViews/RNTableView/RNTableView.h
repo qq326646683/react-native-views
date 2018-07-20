@@ -82,7 +82,7 @@
 
 @property(nonatomic, copy) RCTBubblingEventBlock onWillDisplayCell;
 @property(nonatomic, copy) RCTBubblingEventBlock onEndDisplayingCell;
-@property(nonatomic, copy) RCTBubblingEventBlock onPress;
+//@property(nonatomic, copy) RCTBubblingEventBlock onPress;
 @property(nonatomic, copy) RCTBubblingEventBlock onAccessoryPress;
 @property(nonatomic, copy) RCTBubblingEventBlock onChange;
 @property(nonatomic, copy) RCTDirectEventBlock onScroll;

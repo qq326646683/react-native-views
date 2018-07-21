@@ -55,6 +55,7 @@ UIKIT_EXTERN NSString *const MJRefreshBackFooterIdleText;
 UIKIT_EXTERN NSString *const MJRefreshBackFooterPullingText;
 UIKIT_EXTERN NSString *const MJRefreshBackFooterRefreshingText;
 UIKIT_EXTERN NSString *const MJRefreshBackFooterNoMoreDataText;
+UIKIT_EXTERN NSString *const MJRefreshBackFooterFailureText;
 
 UIKIT_EXTERN NSString *const MJRefreshHeaderLastTimeText;
 UIKIT_EXTERN NSString *const MJRefreshHeaderDateTodayText;

@@ -43,7 +43,7 @@
     CGFloat pullingPercent = (currentOffsetY - happenOffsetY) / self.mj_h;
     
     // 如果已全部加载，仅设置pullingPercent，然后返回
-    if (self.state == MJRefreshStateNoMoreData) {
+    if (self.state == MJRefreshStateNoMoreData || self.state == MJRereshStateFailure) {
         self.pullingPercent = pullingPercent;
         return;
     }
@@ -85,7 +85,7 @@
     MJRefreshCheckState
     
     // 根据状态来设置属性
-    if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle) {
+    if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle || state == MJRereshStateFailure) {
         // 刷新完毕
         if (MJRefreshStateRefreshing == oldState) {
             [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{

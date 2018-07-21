@@ -308,6 +308,12 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     [self.tableView.mj_footer endRefreshingWithNoMoreData];
 }
 
+-(void)loadFailure {
+    NSLog(@"加载失败-loadFailure");
+    [self.tableView.mj_footer endRefreshingWithFailure];
+}
+
+
 -(void)scrollToIndex: (NSInteger)index section:(NSInteger)section animated:(BOOL)animated {
     if ([self.tableView numberOfRowsInSection:section] > index) {
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:index inSection:section];

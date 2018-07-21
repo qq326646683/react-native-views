@@ -109,6 +109,11 @@
             [self.loading stopAnimating];
             self.label.text = @"木有数据了(开关是打酱油滴)";
             [self.s setOn:NO animated:YES];
+            break;
+        case MJRereshStateFailure:
+            [self.loading stopAnimating];
+            self.label.text = @"加载失败了(开关是打酱油滴)";
+            [self.s setOn:NO animated:YES];
         default:
             break;
     }

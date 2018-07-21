@@ -122,6 +122,8 @@
         self.gifView.hidden = NO;
     } else if (state == MJRefreshStateNoMoreData) {
         self.gifView.hidden = YES;
+    } else if (state == MJRereshStateFailure) {
+        self.gifView.hidden = YES;
     }
 }
 @end

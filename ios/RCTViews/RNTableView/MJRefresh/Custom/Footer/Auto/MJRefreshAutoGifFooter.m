@@ -107,7 +107,7 @@
             self.gifView.animationDuration = [self.stateDurations[@(state)] doubleValue];
             [self.gifView startAnimating];
         }
-    } else if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle) {
+    } else if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle || state == MJRereshStateFailure) {
         [self.gifView stopAnimating];
         self.gifView.hidden = YES;
     }

@@ -59,7 +59,7 @@
     MJRefreshCheckState
     
     // 根据状态做事情
-    if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle) {
+    if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle || state == MJRereshStateFailure) {
         [self.loadingView stopAnimating];
     } else if (state == MJRefreshStateRefreshing) {
         [self.loadingView startAnimating];

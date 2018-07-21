@@ -65,6 +65,13 @@
     });
 }
 
+- (void)endRefreshingWithFailure
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.state = MJRereshStateFailure;
+    });
+}
+
 - (void)noticeNoMoreData
 {
     [self endRefreshingWithNoMoreData];

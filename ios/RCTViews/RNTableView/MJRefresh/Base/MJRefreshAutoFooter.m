@@ -125,7 +125,7 @@
     
     if (state == MJRefreshStateRefreshing) {
         [self executeRefreshingCallback];
-    } else if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle) {
+    } else if (state == MJRefreshStateNoMoreData || state == MJRefreshStateIdle || state == MJRereshStateFailure) {
         if (MJRefreshStateRefreshing == oldState) {
             if (self.endRefreshingCompletionBlock) {
                 self.endRefreshingCompletionBlock();

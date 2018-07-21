@@ -96,6 +96,11 @@
             [self.s setOn:NO animated:YES];
             [self.loading stopAnimating];
             break;
+        case MJRereshStateFailure:
+            self.label.text = @"加载失败了(开关是打酱油滴)";
+            [self.s setOn:NO animated:YES];
+            [self.loading stopAnimating];
+            break;
         default:
             break;
     }

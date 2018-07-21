@@ -114,6 +114,9 @@
     } else if (state == MJRefreshStateNoMoreData) {
         self.arrowView.hidden = YES;
         [self.loadingView stopAnimating];
+    } else if (state == MJRereshStateFailure) {
+        self.arrowView.hidden = YES;
+        [self.loadingView stopAnimating];
     }
 }
 

@@ -334,6 +334,20 @@ RCT_EXPORT_METHOD(loadLastData:(nonnull NSNumber *)reactTag)
      }];
 }
 
+RCT_EXPORT_METHOD(loadFailure:(nonnull NSNumber *)reactTag)
+{
+    [self.bridge.uiManager addUIBlock:
+     ^(__unused RCTUIManager *uiManager, NSDictionary *viewRegistry){
+         RNTableView *tableView = viewRegistry[reactTag];
+         
+         if ([tableView isKindOfClass:[RNTableView class]]) {
+             [tableView loadFailure];
+         } else {
+             RCTLogError(@"Cannot loadFailure: %@ (tag #%@) is not RNTableView", tableView, reactTag);
+         }
+     }];
+}
+
 RCT_EXPORT_METHOD(delAndReload:(nonnull NSNumber *)reactTag)
 {
     [self.bridge.uiManager addUIBlock:

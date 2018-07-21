@@ -95,6 +95,7 @@
 - (void)startLoadMore;
 - (void)stopLoadMore;
 - (void)loadLastData;
+- (void)loadFailure;
 - (void)scrollToOffsetX:(CGFloat)x offsetY:(CGFloat)y animated:(BOOL)animated;
 - (void)scrollToIndex:(NSInteger)index section:(NSInteger)section animated:(BOOL)animated;
 - (void)delAndreloadData;

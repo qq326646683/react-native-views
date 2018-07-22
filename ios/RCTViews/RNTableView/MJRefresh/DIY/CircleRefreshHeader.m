@@ -7,6 +7,7 @@
 //
 
 #import "CircleRefreshHeader.h"
+#import "NSBundle+MJRefresh.h"
 
 @interface CircleRefreshHeader()<CAAnimationDelegate>
 @property (weak, nonatomic) UIView *circle;
@@ -30,7 +31,11 @@
     _circleR = 14;
     _biggerRate = 2;
 
-    UIImage * image = [UIImage imageNamed:@"earth_bg.png"];
+    UIImage * image = [UIImage imageWithContentsOfFile:[[NSBundle mj_refreshBundle] pathForResource:@"earth_bg" ofType:@"png"]];
+    
+    
+    
+    
     CGFloat realTwoR = _circleR*2*_biggerRate;
     CGFloat scale = _circleR*2/image.size.height;
     self.imageWidth = image.size.width*scale;

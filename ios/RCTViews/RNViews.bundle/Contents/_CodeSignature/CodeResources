@@ -8,6 +8,10 @@
 		<data>
 		5ZENFuDcEgHjDuL7tn7h97HeuSE=
 		</data>
+		<key>Resources/earth_bg.png</key>
+		<data>
+		rZHafmo4CoMHR1eEbemKASH9tbs=
+		</data>
 		<key>Resources/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
@@ -47,6 +51,17 @@
 			<key>hash2</key>
 			<data>
 			5pZTVM6xOoz5TmObI4Nq10XxwWgOr9sM2We8r8FZAYg=
+			</data>
+		</dict>
+		<key>Resources/earth_bg.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rZHafmo4CoMHR1eEbemKASH9tbs=
+			</data>
+			<key>hash2</key>
+			<data>
+			LtlXbGGDvE2CKZ/S2iJfWtcVxB+IK3rFlsI6/Fl2GlE=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/Localizable.strings</key>

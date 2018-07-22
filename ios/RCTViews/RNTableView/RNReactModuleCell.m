@@ -32,6 +32,9 @@
     if (_rootView == nil) {
         //Create the mini react app that will populate our cell. This will be called from cellForRowAtIndexPath
         _rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:reactModule initialProperties:props];
+        _rootView.backgroundColor = [UIColor clearColor];
+//        self.backgroundColor = [UIColor blueColor];
+//        self.backgroundView.backgroundColor = [UIColor yellowColor];
         [self.contentView addSubview:_rootView];
         _rootView.frame = self.contentView.frame;
         _rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;

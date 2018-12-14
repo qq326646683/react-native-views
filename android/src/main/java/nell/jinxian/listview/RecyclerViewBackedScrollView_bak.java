@@ -2,6 +2,7 @@ package nell.jinxian.listview;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,10 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.SystemClock;
@@ -24,10 +28,8 @@ import com.facebook.react.views.scroll.OnScrollDispatchHelper;
 import com.facebook.react.views.scroll.ScrollEvent;
 import com.facebook.react.views.scroll.ScrollEventType;
 import com.facebook.react.views.scroll.VelocityHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import nell.jinxian.R;
 
 /**
@@ -41,12 +43,24 @@ import nell.jinxian.R;
  * rows when requested.
  */
 @VisibleForTesting
-public class RecyclerViewBackedScrollView extends RecyclerView {
-
+public class RecyclerViewBackedScrollView_bak extends RecyclerView {
   private final static String TAG = "RecyclerViewBackedScrol";
 
   private final OnScrollDispatchHelper mOnScrollDispatchHelper = new OnScrollDispatchHelper();
   private final VelocityHelper mVelocityHelper = new VelocityHelper();
+
+  private RLRefreshView layoutRefresh;
+  int refreshHeight = 200;//DisplayUtils.dp2px(getReactContext(),100);
+  /**
+   * 在被判定为滚动之前用户手指可以移动的最大值
+   */
+  private int touchSlop;
+  private TextView tv;
+  private RecyclerView.LayoutParams refreshLayoutParams;
+  /**
+   * 下拉刷新起始位置
+   */
+  private float refreshY = -1;
 
   static class ScrollOptions {
     @Nullable
@@ -157,13 +171,13 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
     }
   }
 
-  /*package*/ static class ReactListAdapter extends Adapter<ConcreteViewHolder> {
+  /*package*/  class ReactListAdapter extends Adapter<ConcreteViewHolder> {
 
     private final List<RecyclerViewItemView> mViews = new ArrayList<>();
-    private final RecyclerViewBackedScrollView mScrollView;
+    private final RecyclerViewBackedScrollView_bak mScrollView;
     private int mItemCount = 0;
 
-    public ReactListAdapter(RecyclerViewBackedScrollView scrollView) {
+    public ReactListAdapter(RecyclerViewBackedScrollView_bak scrollView) {
       mScrollView = scrollView;
       //setHasStableIds(true);
     }
@@ -187,27 +201,51 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
       return mViews.size();
     }
 
+    int RefreshHeader = 0;
+    int NormalItem = 1;
+
     @Override
-    public ConcreteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      return new ConcreteViewHolder(new RecyclableWrapperViewGroup(parent.getContext(), this));
+    public int getItemViewType(int position) {
+      if (position == 0) {
+        return RefreshHeader;
+      } else {
+        return NormalItem;
+      }
+    }
+
+    @Override
+    public ConcreteViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+      if (viewType == RefreshHeader) {
+        layoutRefresh = new RLRefreshView(parent.getContext()); //(LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_refresh, null);
+        refreshLayoutParams = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, refreshHeight);
+        refreshLayoutParams.topMargin = -refreshHeight + 1;
+        layoutRefresh.setLayoutParams(refreshLayoutParams);
+
+        return new ConcreteViewHolder(layoutRefresh);
+      } else {
+        return new ConcreteViewHolder(new RecyclableWrapperViewGroup(parent.getContext(), this));
+      }
     }
 
     @Override
     public void onBindViewHolder(ConcreteViewHolder holder, int position) {
-      RecyclableWrapperViewGroup vg = (RecyclableWrapperViewGroup) holder.itemView;
-      View row = getViewByItemIndex(position);
-      if (row != null && row.getParent() != vg) {
-        if (row.getParent() != null) {
-          ((ViewGroup) row.getParent()).removeView(row);
+      if (position != 0) {
+        RecyclableWrapperViewGroup vg = (RecyclableWrapperViewGroup) holder.itemView;
+        View row = getViewByItemIndex(position);
+        if (row != null && row.getParent() != vg) {
+          if (row.getParent() != null) {
+            ((ViewGroup) row.getParent()).removeView(row);
+          }
+          vg.addView(row, 0);
         }
-        vg.addView(row, 0);
       }
     }
 
     @Override
     public void onViewRecycled(ConcreteViewHolder holder) {
       super.onViewRecycled(holder);
-      ((RecyclableWrapperViewGroup) holder.itemView).removeAllViews();
+      if (holder.itemView instanceof RecyclableWrapperViewGroup)
+        ((RecyclableWrapperViewGroup) holder.itemView).removeAllViews();
     }
 
     @Override
@@ -244,7 +282,7 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
     if (mOnScrollDispatchHelper.onScrollChanged(l, t)) {
       getReactContext().getNativeModule(UIManagerModule.class).getEventDispatcher()
         .dispatchEvent(ScrollEvent.obtain(
-          getParentId(),
+          getId(),
           ScrollEventType.SCROLL,
           0, /* offsetX = 0, horizontal scrolling only */
           computeVerticalScrollOffset(),
@@ -256,14 +294,13 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
           getHeight()));
     }
 
-    final int firstIndex = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
-    final int lastIndex = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
+    final int firstIndex = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition() - 1;
+    final int lastIndex = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition() - 1;
 
     if (firstIndex != mFirstVisibleIndex || lastIndex != mLastVisibleIndex) {
-      Log.d(this.getClass().getSimpleName(), "getParentId : " + getParentId());
       getReactContext().getNativeModule(UIManagerModule.class).getEventDispatcher()
         .dispatchEvent(new VisibleItemsChangeEvent(
-          getParentId(),
+          getId(),
           SystemClock.nanoTime(),
           firstIndex,
           lastIndex));
@@ -277,8 +314,10 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
     return (ReactContext) ((ContextThemeWrapper) getContext()).getBaseContext();
   }
 
-  public RecyclerViewBackedScrollView(Context context) {
+  public RecyclerViewBackedScrollView_bak(Context context) {
     super(new ContextThemeWrapper(context, R.style.ScrollbarRecyclerView));
+    // 获取判断为滚动之前的最大值
+    touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     setHasFixedSize(true);
     ((DefaultItemAnimator) getItemAnimator()).setSupportsChangeAnimations(false);
     setLayoutManager(new LinearLayoutManager(context));
@@ -316,7 +355,7 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
       mDragging = true;
       getReactContext().getNativeModule(UIManagerModule.class).getEventDispatcher()
         .dispatchEvent(ScrollEvent.obtain(
-          getParentId(),
+          getId(),
           ScrollEventType.BEGIN_DRAG,
           0, /* offsetX = 0, horizontal scrolling only */
           computeVerticalScrollOffset(),
@@ -332,13 +371,6 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
     return false;
   }
 
-  public int getParentId() {
-    if (this.getParent() instanceof YunioSmartRefreshLayout) {
-      return ((YunioSmartRefreshLayout) getParent()).getId();
-    }
-    return -1;
-  }
-
   @Override
   public boolean onTouchEvent(MotionEvent ev) {
     int action = ev.getAction() & MotionEvent.ACTION_MASK;
@@ -347,7 +379,7 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
       mVelocityHelper.calculateVelocity(ev);
       getReactContext().getNativeModule(UIManagerModule.class).getEventDispatcher()
         .dispatchEvent(ScrollEvent.obtain(
-          getParentId(),
+          getId(),
           ScrollEventType.END_DRAG,
           0, /* offsetX = 0, horizontal scrolling only */
           computeVerticalScrollOffset(),
@@ -358,7 +390,115 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
           getWidth(),
           getHeight()));
     }
+
+    int firstIndex = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition() - 1;
+    Log.e(TAG, "firstIndex:" + firstIndex);
+    switch (action) {
+      case MotionEvent.ACTION_MOVE:
+        if (firstIndex == -1) {
+          if (refreshY == -1) {
+            refreshY = ev.getRawY();
+          }
+          float yMove = ev.getRawY();
+          int distance = (int) (yMove - refreshY);
+          if (distance <= 0 && refreshLayoutParams.topMargin <= refreshHeight) {
+            return super.onTouchEvent(ev);
+          }
+          if (distance < touchSlop) { // 移动距离小于最小响应距离，不做操作
+            return false;
+          }
+
+          Log.e(TAG, "oldTopMargin:" + refreshLayoutParams.topMargin);
+          Log.e(TAG, "topMargin_distance:" + distance + "  topMargin:" + (distance - refreshHeight));
+          if(layoutRefresh.getStatus() != StatusView.STATUS_LOADING) {
+            if(refreshLayoutParams.topMargin >0) {
+              layoutRefresh.onLoosen();
+            } else {
+              layoutRefresh.onPulling(getPercent(layoutRefresh));
+            }
+            refreshLayoutParams.topMargin = distance - refreshHeight;
+
+          }
+        }
+        break;
+      case MotionEvent.ACTION_UP:
+        if(layoutRefresh.getStatus() != StatusView.STATUS_LOADING) {
+          if(layoutRefresh.getStatus() == StatusView.STATUS_LOOSEN) {
+            new HideRefreshTask(0, 60).execute();
+            onRefresh();
+          }else if(layoutRefresh.getStatus() == StatusView.STATUS_PULLING) {
+            // 归位
+            new HideRefreshTask(-refreshHeight, 20).execute();
+          }
+        }
+
+        refreshY = -1;
+        break;
+    }
     return super.onTouchEvent(ev);
+  }
+
+  private int getPercent(StatusView layoutRefresh) {
+    int height = layoutRefresh.getHeight();
+    return 100 * (height + refreshLayoutParams.topMargin) / height;
+  }
+
+  private void onRefresh() {
+    layoutRefresh.onLoading();
+    getReactContext().getNativeModule(UIManagerModule.class).getEventDispatcher()
+      .dispatchEvent(new OnRefreshEvent(getId()));
+
+  }
+
+  class HideRefreshTask extends AsyncTask<Void, Integer, Integer> {
+    private int targetTopMargin;
+    private int perHeight;
+    public HideRefreshTask(int targetTopMargin, int perHeight) {
+      this.targetTopMargin = targetTopMargin;
+      this.perHeight = perHeight;
+    }
+
+    @Override
+    protected Integer doInBackground(Void... voids) {
+      int topMargin = refreshLayoutParams.topMargin;
+      while (true) {
+        topMargin = topMargin - perHeight;
+        if (topMargin < targetTopMargin) {
+          topMargin = targetTopMargin;
+          break;
+        }
+        publishProgress(topMargin);
+        try {
+          Thread.sleep(10);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+      return topMargin;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... topMargin) {
+      Log.e(TAG, "==onProgressUpdate:" + topMargin[0]);
+      refreshLayoutParams.topMargin = topMargin[0];
+      layoutRefresh.setLayoutParams(refreshLayoutParams);
+
+    }
+
+    @Override
+    protected void onPostExecute(Integer topMargin) {
+      Log.e(TAG, "==onPostExecute:" + topMargin);
+
+      refreshLayoutParams.topMargin = topMargin + 1;
+      layoutRefresh.setLayoutParams(refreshLayoutParams);
+    }
+  }
+
+  public void onComplete() {
+    if (StatusView.STATUS_LOADING == layoutRefresh.getStatus()) {
+      layoutRefresh.onFinish();
+      new HideRefreshTask(-refreshHeight, 20).execute();
+    }
   }
 
   private boolean mRequestedLayout = false;
@@ -463,11 +603,6 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
 
     smoothScroller.setTargetPosition(position);
     this.getLayoutManager().startSmoothScroll(smoothScroller);
-  }
-
-  public void setInverted(boolean inverted) {
-    LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
-    layoutManager.setReverseLayout(inverted);
   }
 
   public void setItemAnimatorEnabled(boolean enabled) {

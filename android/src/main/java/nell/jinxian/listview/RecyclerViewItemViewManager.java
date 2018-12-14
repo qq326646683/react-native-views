@@ -5,20 +5,25 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
 public class RecyclerViewItemViewManager extends ViewGroupManager<RecyclerViewItemView> {
-    private static String REACT_CLASS = "RecyclerViewItemView";
+  private static String REACT_CLASS = "RecyclerViewItemView";
 
-    @Override
-    public String getName() {
-        return REACT_CLASS;
-    }
+  @Override
+  public String getName() {
+    return REACT_CLASS;
+  }
 
-    @Override
-    protected RecyclerViewItemView createViewInstance(ThemedReactContext reactContext) {
-        return new RecyclerViewItemView(reactContext);
-    }
+  @Override
+  protected RecyclerViewItemView createViewInstance(ThemedReactContext reactContext) {
+    return new RecyclerViewItemView(reactContext);
+  }
 
-    @ReactProp(name = "itemIndex")
-    public void setItemIndex(RecyclerViewItemView view, int itemIndex) {
-        view.setItemIndex(itemIndex + 1);
-    }
+  @ReactProp(name = "itemIndex")
+  public void setItemIndex(RecyclerViewItemView view, int itemIndex) {
+    view.setItemIndex(itemIndex);
+  }
+
+  @ReactProp(name = "isLoadMore")
+  public void setItemIndex(RecyclerViewItemView view, boolean isLoadMore) {
+    view.setLoadMore(isLoadMore);
+  }
 }

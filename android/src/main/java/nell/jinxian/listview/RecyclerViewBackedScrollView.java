@@ -44,7 +44,7 @@ import nell.jinxian.R;
 public class RecyclerViewBackedScrollView extends RecyclerView {
 
   private final static String TAG = "RecyclerViewBackedScrol";
-
+  private final static double speedRatio = 0.3;
   private final OnScrollDispatchHelper mOnScrollDispatchHelper = new OnScrollDispatchHelper();
   private final VelocityHelper mVelocityHelper = new VelocityHelper();
 
@@ -281,7 +281,12 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
     super(new ContextThemeWrapper(context, R.style.ScrollbarRecyclerView));
     setHasFixedSize(true);
     ((DefaultItemAnimator) getItemAnimator()).setSupportsChangeAnimations(false);
-    setLayoutManager(new LinearLayoutManager(context));
+    ScrollSpeedLinearLayoutManger scrollSpeedLinearLayoutManger = new ScrollSpeedLinearLayoutManger(context);
+    scrollSpeedLinearLayoutManger.setSpeedRatio(speedRatio);
+    scrollSpeedLinearLayoutManger.setOrientation(LinearLayoutManager.VERTICAL);
+    scrollSpeedLinearLayoutManger.setMaxFlingVelocity(this, 4000);
+    //    setLayoutManager(new LinearLayoutManager(context));
+    setLayoutManager(scrollSpeedLinearLayoutManger);
     setAdapter(new ReactListAdapter(this));
   }
 
@@ -337,6 +342,13 @@ public class RecyclerViewBackedScrollView extends RecyclerView {
       return ((YunioSmartRefreshLayout) getParent()).getId();
     }
     return -1;
+  }
+
+  @Override
+  public boolean fling(int velocityX, int velocityY) {
+    velocityY *= speedRatio;
+    return super.fling(velocityX, velocityY);
+    //        return super.fling(velocityX, velocityY);
   }
 
   @Override

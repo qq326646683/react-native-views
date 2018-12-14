@@ -1,6 +1,6 @@
 {
   "name": "react-native-views",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "views collection",
   "main": "index.js",
   "scripts": {

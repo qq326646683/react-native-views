@@ -9,23 +9,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import nell.jinxian.listview.RTCRecyclerViewItemViewManager;
 import nell.jinxian.listview.RecyclerViewBackedScrollViewManager;
 import nell.jinxian.listview.RecyclerViewItemViewManager;
+import nell.jinxian.listview.SmartRefreshManager;
+import nell.jinxian.listview.YunioRecyclerViewManager;
 
 public class RCTViewsPackage implements ReactPackage {
-  @Override
-  public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-    List<NativeModule> modules = new ArrayList<>();
-    modules.add(new RCTViewsModule(reactContext));
+    @Override
+    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+        List<NativeModule> modules = new ArrayList<>();
+        modules.add(new RCTViewsModule(reactContext));
 
-    return modules;
-  }
+        return modules;
+    }
 
-  @Override
-  public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-    return Arrays.<ViewManager>asList(
-      new RecyclerViewBackedScrollViewManager(),
-      new RecyclerViewItemViewManager()
-    );
-  }
+    @Override
+    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+        return Arrays.<ViewManager>asList(
+                new RecyclerViewBackedScrollViewManager(),
+                new RecyclerViewItemViewManager(),
+                new SmartRefreshManager(),
+                new YunioRecyclerViewManager(),
+                new RTCRecyclerViewItemViewManager()
+        );
+    }
 }

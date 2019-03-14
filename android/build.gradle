@@ -34,10 +34,10 @@ repositories {
 }
 
 dependencies {
-  compile 'com.android.support:recyclerview-v7:26.1.0'
-  compile 'com.android.support:appcompat-v7:26.1.0'
-  compile 'com.android.support:design:26.1.0'
-  compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
-  compile 'com.facebook.react:react-native:+'
+  implementation 'com.android.support:recyclerview-v7:26.1.0'
+  implementation 'com.android.support:appcompat-v7:26.1.0'
+  implementation 'com.android.support:design:26.1.0'
+  implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
+  implementation 'com.facebook.react:react-native:+'
 
 }

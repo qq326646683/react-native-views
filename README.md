@@ -16,7 +16,7 @@
 
 ## Props
 | Prop | Type | Note |
-|---|---|---|---|
+|---|---|---|
 | data | Array | 数据源
 | refreshState | RefreshState | -Idle 闲置状态 <br/>-HeaderRefreshing 下拉刷新中 <br/>-FooterRefreshing 加载更多中 <br/>-NoMoreData 没有更多 |
 | renderItem | ListRenderItem | 返回每个item

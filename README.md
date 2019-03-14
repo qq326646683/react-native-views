@@ -55,7 +55,4 @@
 />
 ```
 
-详见:[RNListViewDemo](https://gitlab.x.yunio.com/web-public/react-native-demo/tree/master/src/pages/RNListView/RNListView.tsx)
-
-
 
